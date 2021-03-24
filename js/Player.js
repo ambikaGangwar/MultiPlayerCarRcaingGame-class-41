@@ -1,14 +1,17 @@
 class Player {
   constructor(){
     this.index = null;
+    this.rank=null;
     this.distance = 0;
     this.name = null;
   }
 
+  
   getCount(){
     var playerCountRef = database.ref('playerCount');
     playerCountRef.on("value",(data)=>{
       playerCount = data.val();
+
     })
   }
 
@@ -25,11 +28,27 @@ class Player {
       distance:this.distance
     });
   }
-
+//common to all object :static function
   static getPlayerInfo(){
     var playerInfoRef = database.ref('players');
     playerInfoRef.on("value",(data)=>{
       allPlayers = data.val();
     })
   }
+
+ getcarsAtEnd(){
+   database.ref('carsAtEnd').on("value",(data) => {
+    this.rank=data.val();
+
+   })
+ }
+ // to call the main databse we use '/'
+   static updatecarsAtEnd(rank){
+    database.ref('/').update({
+      carsAtEnd:rank
+    })
+   }
+
+
+
 }
